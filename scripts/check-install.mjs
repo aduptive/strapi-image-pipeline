@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os'
 import { resolve, join } from 'node:path'
 
 for (const major of [4, 5]) {
-  const version = `${major === 4 ? 1 : 2}.0.0-alpha.1`
+  const version = `${major === 4 ? 1 : 2}.0.0-alpha.2`
   const tarball = resolve(`artifacts/aduptive-strapi-image-pipeline-${version}.tgz`)
   assert.ok(existsSync(tarball), `Missing tarball: run npm run pack:local first (${tarball})`)
   const dir = mkdtempSync(join(tmpdir(), `image-install-${major}-`))

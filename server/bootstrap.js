@@ -2,7 +2,7 @@
 const fs = require('node:fs/promises')
 const path = require('node:path')
 const { AsyncLocalStorage } = require('node:async_hooks')
-const { errors } = require('@strapi/utils')
+const errors = require('./strapi-errors')
 const sharp = require('sharp')
 const { createOptimize } = require('./optimize')
 const { processSvg } = require('./svg')
