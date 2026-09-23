@@ -1,0 +1,33 @@
+# Package checks only: unit tests, both distribution bundles and the npm
+# tarball allowlist. The Strapi 4/5 host, browser, HTTP, webhook and permission
+# checks need the local integration laboratory and are not run here.
+name: Package checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20.11.0, 22.22.1]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Audit production dependencies of both distributions
+        run: npm run audit:packages
+      - name: Install the built tarball into a clean project
+        run: npm run check:install

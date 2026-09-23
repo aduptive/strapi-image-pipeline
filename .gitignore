@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.local/
+artifacts/
+docs/HANDOFF.md
+docs/NAMING.md
+docs/RELEASE.md
+docs/EXTENSIBILITY-PLAN.md
+docs/LOCAL-TESTING.md
+*.tgz
+.env*
+!.env.example
+.DS_Store
