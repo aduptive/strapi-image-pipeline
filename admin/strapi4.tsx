@@ -11,4 +11,4 @@ function usePermissions() {
   return { canRead: allowedActions.canRead, canUpdate: allowedActions.canUpdate, isLoading }
 }
 const Page = () => <Settings useClient={useFetchClient} usePermissions={usePermissions} NumberField={NumberField} ToggleField={ToggleField} />
-export default { register(app: any) { register(app, Page) } }
+export default { register(app: any) { register(app, Page, '/settings/image-pipeline') } }

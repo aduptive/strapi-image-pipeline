@@ -5,7 +5,7 @@ const { createReadStream } = require('node:fs')
 const path = require('node:path')
 const { randomUUID } = require('node:crypto')
 const sharp = require('sharp')
-const { errors } = require('@strapi/utils')
+const errors = require('./strapi-errors')
 const { bytesToKbytes } = require('./optimize')
 const { sanitizeSvg } = require('./svg')
 

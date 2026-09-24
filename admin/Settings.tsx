@@ -61,9 +61,11 @@ export function Settings({ useClient, usePermissions, NumberField, ToggleField }
   </Flex></Box>
 }
 export const permissions = { read: [{ action: 'plugin::image-pipeline.read', subject: null }], update: [{ action: 'plugin::image-pipeline.update', subject: null }] }
-export function register(app: any, Component: any) {
+// `to`: Strapi 4 wants the absolute path, Strapi 5 one relative to /settings (it warns otherwise).
+// Loader: a module shape (`{ default }`) from a non-async function works on both; Strapi 5 warns on async loaders.
+export function register(app: any, Component: any, to: string) {
   app.createSettingSection({ id: 'image-pipeline', intlLabel: { id: 'image-pipeline.title', defaultMessage: 'Image Pipeline' } },
-    [{ id: 'image-pipeline-settings', to: '/settings/image-pipeline',
-      intlLabel: { id: 'image-pipeline.settings', defaultMessage: 'Settings' }, Component: async () => Component, permissions: permissions.read }])
+    [{ id: 'image-pipeline-settings', to,
+      intlLabel: { id: 'image-pipeline.settings', defaultMessage: 'Settings' }, Component: () => Promise.resolve({ default: Component }), permissions: permissions.read }])
   app.registerPlugin({ id: 'image-pipeline', name: 'Image Pipeline' })
 }

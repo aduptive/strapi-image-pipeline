@@ -4,7 +4,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const sharp = require('sharp')
-const { errors } = require('@strapi/utils')
+const errors = require('./strapi-errors')
 
 const BYTES_PER_KB = 1000
 const KB_ROUNDING = 100

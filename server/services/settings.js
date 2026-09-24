@@ -36,7 +36,7 @@ module.exports = ({ strapi }) => ({
 
   async set(value = {}) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
-      const { errors } = require('@strapi/utils')
+      const errors = require('../strapi-errors')
       throw new errors.ValidationError('Settings must be an object')
     }
     const next = sanitize({ ...(await this.get()), ...value })
