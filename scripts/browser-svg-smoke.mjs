@@ -3,7 +3,7 @@ import { labHost } from './lab.mjs'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 // Reuse the shared laboratory's browser dependency.
-const { chromium } = createRequire(new URL('../../strapi-plugin-block-picker/package.json', import.meta.url))('playwright')
+const { chromium } = createRequire(new URL('../../strapi-plugin-blockscene/package.json', import.meta.url))('playwright')
 const major = Number(process.argv[2])
 assert.ok([4, 5].includes(major), 'Pass 4 or 5')
 const { base: baseURL, credentials } = labHost(major)
@@ -12,6 +12,9 @@ const page = await browser.newPage({ baseURL, viewport: { width: 1440, height: 1
 const controls = { addSvgViewBox: 'Add missing SVG viewBox (numeric or px dimensions)', responsiveSvg: 'Remove SVG dimensions when viewBox is valid' }
 const errors = []
 page.on('pageerror', error => errors.push(error.message))
+// Console errors and warnings are recorded, not asserted: Strapi itself logs some. Read the report for ours.
+const consoleMessages = new Set()
+page.on('console', message => { if (['error', 'warning'].includes(message.type())) consoleMessages.add(`${message.type()}: ${message.text().split('\n')[0].slice(0, 300)}`) })
 let original
 let headers
 try {
@@ -38,7 +41,7 @@ try {
   assert.deepEqual(errors, [])
   mkdirSync('artifacts', { recursive: true })
   await page.screenshot({ path: `artifacts/strapi${major}-svg-settings.png`, fullPage: true })
-  writeFileSync(`artifacts/strapi${major}-svg-browser.json`, JSON.stringify({ date: new Date().toISOString(), strapi: major, passed: true, checks: ['SVG controls', 'save', 'reload persistence'], runtimeErrors: errors }, null, 2))
+  writeFileSync(`artifacts/strapi${major}-svg-browser.json`, JSON.stringify({ date: new Date().toISOString(), strapi: major, passed: true, checks: ['SVG controls', 'save', 'reload persistence'], runtimeErrors: errors, consoleMessages: [...consoleMessages] }, null, 2))
   console.log(`Strapi ${major}: SVG settings browser checks passed`)
 } finally {
   if (original) {

@@ -7,8 +7,8 @@ const NumberField = ({ name, label, value, onChange, ...props }: any) =>
 const ToggleField = ({ name, label, value, onChange, disabled }: any) =>
   <Flex gap={3}><Switch name={name} aria-label={label} checked={value} disabled={disabled} onCheckedChange={onChange} /><Typography>{label}</Typography></Flex>
 function usePermissions() {
-  const { allowedActions, isLoading }: any = useRBAC(permissions)
+  const { allowedActions, isLoading }: any = useRBAC(Object.values(permissions).flat())
   return { canRead: allowedActions.canRead, canUpdate: allowedActions.canUpdate, isLoading }
 }
 const Page = () => <Settings useClient={useFetchClient} usePermissions={usePermissions} NumberField={NumberField} ToggleField={ToggleField} />
-export default { register(app: any) { register(app, Page) } }
+export default { register(app: any) { register(app, Page, 'image-pipeline') } }

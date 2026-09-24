@@ -3,12 +3,12 @@
 // list, a missing wrapper or an unresolvable runtime dependency.
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, writeFileSync, rmSync, existsSync } from 'node:fs'
+import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { resolve, join } from 'node:path'
 
 for (const major of [4, 5]) {
-  const version = `${major === 4 ? 1 : 2}.0.0-alpha.2`
+  const { version } = JSON.parse(readFileSync(`packages/strapi${major}/package.json`))
   const tarball = resolve(`artifacts/aduptive-strapi-image-pipeline-${version}.tgz`)
   assert.ok(existsSync(tarball), `Missing tarball: run npm run pack:local first (${tarball})`)
   const dir = mkdtempSync(join(tmpdir(), `image-install-${major}-`))

@@ -8,7 +8,7 @@ MIT licensed. See [compatibility](https://github.com/aduptive/strapi-image-pipel
 and [report issues](https://github.com/aduptive/strapi-image-pipeline/issues) on GitHub.
 
 Supported: Strapi 4.24+ and Strapi 5.x. Tested on Strapi 4.24.0 and 4.26.1
-(Node 20.11.0), 5.0.0 (Node 20.11.0), 5.52.1 and 5.55.0 (Node 22.22.1), with
+(Node 20.11.0), 5.0.0 (Node 20.11.0), 5.52.1 and 5.55.1 (Node 22.22.1), with
 the local upload provider and SQLite. Remote providers are not certified.
 
 ## Install
@@ -17,9 +17,9 @@ Install the version matching your Strapi major, then enable the plugin in your a
 
 ```sh
 # Strapi 4.24+ / Node 20
-npm install @aduptive/strapi-image-pipeline@1.0.0-alpha.2
+npm install @aduptive/strapi-image-pipeline@1.0.0-alpha.3
 # Strapi 5 / Node 20 or 22
-npm install @aduptive/strapi-image-pipeline@2.0.0-alpha.2
+npm install @aduptive/strapi-image-pipeline@2.0.0-alpha.3
 ```
 
 Enable in `config/plugins.js`, then rebuild/restart the admin:
